@@ -1,0 +1,49 @@
+.chatBody{
+    float: right;
+    height: 100%;
+    width: 85%;
+   background-color: #32313B;
+}
+
+.sidenav {
+    height: 100%;
+    width: 15%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #25242C;
+    overflow-x: hidden;
+    padding-top: 60px;
+}
+
+#usersTextArea{
+    background-color: #25242C;
+    color:#EC3F8C;
+    font-family: fantasy;
+    font-size: 20px;
+    border: none;
+    resize: none;
+}
+
+
+.sideTitel{
+    color:#39B1C6;
+    text-align: center;
+    font-family: fantasy;
+    font-size: 25px;
+}
+
+#knappNamn{
+  left:20%;
+}
+#nameInput{
+   text-align: center;
+}
+
+.bodyText{
+    color:#1FD26A;
+    text-align: center;
+    font-family: fantasy;
+    font-size: 45px;
+}

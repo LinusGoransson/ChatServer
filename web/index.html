@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title>Chat</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="jquery.min.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="chatBody">
+            <h2 class="bodyText">Anti-Spam Chatt</h2>
+           <div id="mySidenav" class="sidenav">
+            <h1 class="sideTitel">Användare:</h1>
+            <textarea class="col-lg-12" rows="10" readonly="readonly" id="usersTextArea"></textarea>
+            <div id="nameBox">
+                <input type="text" placeholder="Skriv ditt namn" id="nameInput"/>
+                   <input type="button" onclick="sendName()" value="Skicka" id="knappNamn"/>   
+            </div>  
+        </div>  
+        <div class="container">
+            <textarea class="col-lg-12" rows="10"readonly="readonly" id="messageTextArea"></textarea>
+            <div id="messageBox">
+                <input type="text" placeholder="Skriv ett meddelande" id="messageInput" />
+                <input type="button" onclick="sendMessage()" value="Skicka" id="knapp"/>
+            </div>               
+        </div>
+        </div> 
+
+        
+        
+             
+        <script>
+            $(document).ready(function() {
+                $("#messageBox").hide();
+                $("#knappNamn").click(function() {
+                    $("#nameBox").hide();
+                    $("#messageBox").show();
+                  });
+                  
+                });
+                
+            var url = "ws://localhost:8080/ChatServer/chatserver";
+            var ws = new WebSocket(url);
+            function sendMessage() {
+                ws.send(messageInput.value);
+                messageInput.value = "";
+                
+            }
+            function sendName(){
+                ws.send(nameInput.value);
+                nameInput.value = "";
+                
+            }
+            ws.onmessage = function process(message,botStatus) {
+                console.log(botStatus);
+                var jsondata = JSON.parse(message.data);
+                if (Array.isArray(jsondata)) { 
+                    var output = "";
+                    for (var i = 0; i < jsondata.length; i++) {
+                        output += jsondata[i].username + "\n";
+                    }
+                    usersTextArea.value = output;
+                } else {
+                    messageTextArea.value += jsondata.username + ": " + jsondata.message + "\n";
+                }
+            };
+            
+        </script>
+        <link href="style.css" rel="stylesheet" type="text/css"/>
+        <link href="bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    </body>
+</html>
